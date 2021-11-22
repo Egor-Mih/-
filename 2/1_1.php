@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <!--Лучше максимально разделять языки--->
   <head>
     <meta charset="utf-8">
     <style>
@@ -16,13 +17,11 @@
   </head>
   <body>
     <?php
-    $x=1;
-    if ($x>=1)
-      echo "<p class=green>$x</p>";
-      elseif ($x==0)
-        echo "<p class=yellow>$x</p>";
-        elseif ($x<=-1)
-          echo "<p class=red>$x</p>";
+    $x = -11;
+    if ($x > 0) $class = 'green';
+      elseif ($x == 0) $class = 'red';
+        else $class = 'yellow';
     ?>
+    <p class="<?=$class?>"><?=$x?></p>
   </body>
 </html>
