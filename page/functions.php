@@ -1,14 +1,21 @@
 <?php
 function Page(){
-    $page = intval($_GET['page'] ?? 1);
-    return $page;
+   return intval($_GET['page'] ?? 1);
+}
+function LineFeed($text){
+    if (strpos($text, "\r\n") !== false 
+    || strpos($text, "\r") !== false)
+    return str_replace(["\r\n", "\r"], "\n", $text);
+    else return $text;  
 }
 
-//Разитие текста на абзацы
+
+//Разбитие текста на абзацы
 function TextPreProcessing($text){
     $textarr = trim($text, " \n\r");
-    $textarr = explode(PHP_EOL, $textarr);
+    $textarr = explode("\n", $textarr);
     $textarr = array_values(array_filter($textarr));
+    foreach($textarr as $i) $i = trim($i, " \n\r"); 
     return $textarr;
 }
 // Подсчет количества страниц
@@ -24,24 +31,13 @@ function FromTo($text, $items, $page){
     return $fromTo;
 }
 
-//Функцию на выделение жирным не осилил
-/*function Bold($pageContent){
-    $i = 0;
-    foreach ($pageContent as $value){
-    $str0 = mb_substr($value, 0, 1);
-    $str1 = mb_substr($value, 1);
-    $b[$i] = "<b>".$str0."</b>".$str1;
-    $i++;
+//Функцию на выделение жирным
+function Bold($text){
+    return preg_replace('/[А-ЯЁ]/u', "<b>$0</b>", $text);
 }
-    return $b;
-}
-*/
+
 function Colorise($string){
-    
-    $str_search = ["Дорогие", "дорогие", "Следует", "следует"];
-    $str_raplace = ["<span style=color:red>Дорогие</span>","<span style=color:red>дорогие</span>","<span style=color:red>Следует</span>","<span style=color:red>следует</span>"];
-    $b = str_replace($str_search, $str_raplace, $string);
-    return $b;
+   return preg_replace(["/Дорогие/iu", "/следует/iu"],"<span style=color:red>$0</span>",$string);
 }   
 
 //Создание ссылок
