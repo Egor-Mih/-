@@ -14,7 +14,7 @@ try {
     if (isset($_POST['user']) && isset($_POST['message_text'])){
         $user = $_POST['user'];
         $message_text = $_POST['message_text'];
-        $sql = $mysqli->query ("INSERT INTO message ('id', 'user', 'message_text', 'message_time') value (3, $user, $message_text, CURRENT_TIMESTAMP)");
+        $sql = $mysqli->query("INSERT INTO message ('user', 'message_text', 'message_time') value ($user, $message_text, CURRENT_TIMESTAMP)");
     }
 
     $result = $mysqli->query('SELECT COUNT(1) FROM message');

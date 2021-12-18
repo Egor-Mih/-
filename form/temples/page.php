@@ -9,7 +9,8 @@
 <h2>Страница <?= $page ?></h2>
 <div>
     <?php foreach ($data as $row) {
-        echo "<p> $row[user] - $row[message_text] ($row[message_time]) <a href='?del={$row['id']}'>Удалить</a></p>";}?>
+        echo "<p> $row[user] - $row[message_text] ($row[message_time]) <a href='?del={$row['id']}'>Удалить</a></p>";}
+        ?>
 </div>
 <form method="POST" action="">
     <input name="user" type="text" placeholder="Имя">
