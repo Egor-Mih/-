@@ -1,3 +1,4 @@
+1.1
 SELECT 
   groupnumber,
   lessondate,
@@ -12,7 +13,7 @@ FROM curriculum c
   INNER JOIN buildings b ON c1.idbuilding = b.idbuilding
 WHERE g.groupnumber='J1'
 
-
+1.2
 SELECT 
   groupnumber,
   lessondate,
@@ -30,3 +31,41 @@ FROM curriculum c
   INNER JOIN buildings b ON c1.idbuilding = b.idbuilding
   INNER JOIN teachers t ON g1.idteacher = t.idteacher
 WHERE t.surname='Иванов' AND t.name='Иван' AND t.middlename='Иванович'
+
+1.3
+SELECT 
+  groupnumber,
+  lessondate,
+  lessontime,
+  classroomnumber,
+  address,
+  surname,
+  name,
+  middlename
+FROM curriculum c
+  INNER JOIN groupstudents g ON g.idcurriculum=c.idcurriculum
+  INNER JOIN groupteachers g1 ON g.idgroup = g1.idgroup AND g.idcurriculum = g1.idcurriculum
+  INNER JOIN lessons l ON g1.idgroupteacher = l.idgroupteacher
+  INNER JOIN classrooms c1 ON l.idclassroom = c1.idclassroom
+  INNER JOIN buildings b ON c1.idbuilding = b.idbuilding
+  INNER JOIN teachers t ON g1.idteacher = t.idteacher
+WHERE t.surname='Иванов' AND t.name='Иван' AND t.middlename='Иванович' AND l.lessondate BETWEEN '2020-05-04' AND '2020-05-05' 
+
+2.1
+SELECT 
+  l1.lessontype,
+  s1.subject,
+  SUM(s.hours)
+FROM curriculum c
+  INNER JOIN groupstudents g ON g.idcurriculum=c.idcurriculum
+  INNER JOIN groupteachers g1 ON g.idgroup = g1.idgroup AND g.idcurriculum = g1.idcurriculum
+  INNER JOIN lessons l ON g1.idgroupteacher = l.idgroupteacher
+  INNER JOIN classrooms c1 ON l.idclassroom = c1.idclassroom
+  INNER JOIN buildings b ON c1.idbuilding = b.idbuilding
+  INNER JOIN teachers t ON g1.idteacher = t.idteacher
+  INNER JOIN subjecthours s ON g1.idsubjecthours = s.idsubjecthours AND g1.idcurriculum = s.idcurriculum
+  INNER JOIN lessontypes l1 ON s.idlessontype = l1.idlessontype
+  INNER JOIN curriculumsubjects c2 ON c.idcurriculum = c2.idcurriculum
+  INNER JOIN subjects s1 ON c2.idsubject = s1.idsubject
+WHERE g.groupnumber='J1' AND l.lessondate BETWEEN '2020-05-04' AND '2020-05-06' 
+GROUP BY s1.subject, l1.lessontype
