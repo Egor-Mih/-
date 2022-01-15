@@ -1,0 +1,32 @@
+SELECT 
+  groupnumber,
+  lessondate,
+  lessontime,
+  classroomnumber,
+  address
+FROM curriculum c
+  INNER JOIN groupstudents g ON g.idcurriculum=c.idcurriculum
+  INNER JOIN groupteachers g1 ON g.idgroup = g1.idgroup AND g.idcurriculum = g1.idcurriculum
+  INNER JOIN lessons l ON g1.idgroupteacher = l.idgroupteacher
+  INNER JOIN classrooms c1 ON l.idclassroom = c1.idclassroom
+  INNER JOIN buildings b ON c1.idbuilding = b.idbuilding
+WHERE g.groupnumber='J1'
+
+
+SELECT 
+  groupnumber,
+  lessondate,
+  lessontime,
+  classroomnumber,
+  address,
+  surname,
+  name,
+  middlename
+FROM curriculum c
+  INNER JOIN groupstudents g ON g.idcurriculum=c.idcurriculum
+  INNER JOIN groupteachers g1 ON g.idgroup = g1.idgroup AND g.idcurriculum = g1.idcurriculum
+  INNER JOIN lessons l ON g1.idgroupteacher = l.idgroupteacher
+  INNER JOIN classrooms c1 ON l.idclassroom = c1.idclassroom
+  INNER JOIN buildings b ON c1.idbuilding = b.idbuilding
+  INNER JOIN teachers t ON g1.idteacher = t.idteacher
+WHERE t.surname='Иванов' AND t.name='Иван' AND t.middlename='Иванович'
